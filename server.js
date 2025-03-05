@@ -205,8 +205,8 @@ app.post("/api/create-payment-session", async (req, res) => {
         email: customer && customer.email ? customer.email : "john.doe@example.com",
         name: customer && customer.name ? customer.name : "John Doe"
       },
-      success_url: `http://localhost:${port}/success`,
-      failure_url: `http://localhost:${port}/failure`,
+      success_url: `${req.protocol}://${req.get('host')}/success`,
+      failure_url: `${req.protocol}://${req.get('host')}/failure`,
       capture: true,
       locale: locale || "en-GB",
       processing_channel_id: processingChannelId,
