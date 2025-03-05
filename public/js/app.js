@@ -17,8 +17,8 @@ const shippingAddresses = {
 
 /** THEME CONFIGS */
 const themeConfigs = {
-  default: {
-    name: "Default",
+  classic: {
+    name: "Classic",
     colorBackground: "#ffffff",
     colorAction: "#007BFF",
     colorText: "#333333",
@@ -2859,7 +2859,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState("home"); // Default to homepage instead of products
   const [cartItems, setCartItems] = useState([]);
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('selectedTheme') || 'default';
+    return localStorage.getItem('selectedTheme') || 'simplicity';
   });
   const [globalLocalisation, setGlobalLocalisation] = useState("United Kingdom");
   const [detailProductId, setDetailProductId] = useState(null);
@@ -2909,7 +2909,7 @@ function App() {
     setCurrentPage("success");
   }
 
-  const themeConfig = themeConfigs[theme] || themeConfigs.default;
+  const themeConfig = themeConfigs[theme] || themeConfigs.simplicity;
 
   // Add effect to save theme changes
   useEffect(() => {
@@ -3204,7 +3204,7 @@ function App() {
                 borderRadius: themeConfig.borderRadius[0]
               }}
             >
-              <option value="default">Default</option>
+              <option value="classic">Classic</option>
               <option value="midnight">Midnight</option>
               <option value="simplicity">Simplicity</option>
               <option value="grapefruit">Grapefruit</option>
