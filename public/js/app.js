@@ -2870,6 +2870,11 @@ function App() {
     const saved = JSON.parse(localStorage.getItem("cartItems") || "[]");
     setCartItems(saved);
   }, []);
+  
+  // Add scroll to top effect whenever the page changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
   function saveCart(items) {
     localStorage.setItem("cartItems", JSON.stringify(items));
