@@ -16,6 +16,19 @@ const PROCESSING_CHANNEL_ID = process.env.PROCESSING_CHANNEL_ID || "pc_eonbfv5qt
 // Add this new endpoint to get the latest session ID
 let latestSessionId = null;
 
+// Temporary mapping for Checkout.com redirection that points to our local success/failure routes
+// This is a workaround because Checkout.com requires valid URLs
+app.get('/example-redirect', (req, res) => {
+  // Extract the redirect target from the query parameters
+  const redirectPath = req.query.redirect_path || '/';
+  
+  console.log(`Redirect request received: ${JSON.stringify(req.query)}`);
+  console.log(`Redirecting to: ${redirectPath}`);
+  
+  // Redirect to the local path
+  res.redirect(redirectPath);
+});
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
@@ -205,8 +218,8 @@ app.post("/api/create-payment-session", async (req, res) => {
         email: customer && customer.email ? customer.email : "john.doe@example.com",
         name: customer && customer.name ? customer.name : "John Doe"
       },
-      success_url: `${req.protocol}://${req.get('host')}/success`,
-      failure_url: `${req.protocol}://${req.get('host')}/failure`,
+      success_url: `http://localhost:${port}/example-redirect?redirect_path=/success`,
+      failure_url: `http://localhost:${port}/example-redirect?redirect_path=/failure`,
       capture: true,
       locale: locale || "en-GB",
       processing_channel_id: processingChannelId,
@@ -254,10 +267,12 @@ app.post("/api/create-payment-session", async (req, res) => {
 });
 
 app.get("/success", (req, res) => {
+  console.log("Success route accessed with query params:", req.query);
   res.sendFile(path.join(__dirname, "public", "success.html"));
 });
 
 app.get("/failure", (req, res) => {
+  console.log("Failure route accessed with query params:", req.query);
   res.sendFile(path.join(__dirname, "public", "failure.html"));
 });
 
@@ -323,6 +338,19 @@ app.get("/api/latest-session", (req, res) => {
   } else {
     res.status(404).json({ error: "No session ID found" });
   }
+});
+
+// Redirect handlers for checkout.com redirects
+app.get("/redirect/success", (req, res) => {
+  // Handle redirects from checkout.com to our success page
+  const redirectTo = req.query.redirect_to || `/success?session_id=${req.query.session_id || ''}`;
+  res.redirect(redirectTo);
+});
+
+app.get("/redirect/failure", (req, res) => {
+  // Handle redirects from checkout.com to our failure page
+  const redirectTo = req.query.redirect_to || `/failure?session_id=${req.query.session_id || ''}`;
+  res.redirect(redirectTo);
 });
 
 app.listen(port, () => {
