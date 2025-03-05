@@ -2898,6 +2898,8 @@ function App() {
       saveCart([...cartItems, { ...prod, quantity: 1 }]);
     }
     triggerCartNotification();
+    // Scroll to the top of the page when an item is added to the basket
+    window.scrollTo(0, 0);
   }
 
   function removeOneFromCart(id) {
@@ -2905,6 +2907,8 @@ function App() {
       .map(it => (it.id === id ? { ...it, quantity: it.quantity - 1 } : it))
       .filter(x => x.quantity > 0);
     saveCart(updated);
+    // Scroll to the top of the page when an item is removed from the basket
+    window.scrollTo(0, 0);
   }
 
   function handlePaymentSuccess(response) {
