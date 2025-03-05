@@ -21,9 +21,17 @@ let latestSessionId = null;
 app.get('/example-redirect', (req, res) => {
   // Extract the redirect target from the query parameters
   const redirectPath = req.query.redirect_path || '/';
+  const sessionId = req.query['cko-payment-session-id'];
   
-  console.log(`Redirect request received: ${JSON.stringify(req.query)}`);
+  console.log(`Redirect request received from: ${req.get('host')}`);
+  console.log(`Redirect query params: ${JSON.stringify(req.query)}`);
+  console.log(`Payment session ID in redirect: ${sessionId}`);
   console.log(`Redirecting to: ${redirectPath}`);
+  
+  // Store the session ID for later retrieval if needed
+  if (sessionId) {
+    latestSessionId = sessionId;
+  }
   
   // Redirect to the local path
   res.redirect(redirectPath);
@@ -51,6 +59,13 @@ app.post("/api/create-payment-session", async (req, res) => {
       disabled_payment_methods,
       locale
     } = req.body;
+
+    // Determine the base URL from the request
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+    const host = req.headers['x-forwarded-host'] || req.get('host');
+    const baseUrl = `${protocol}://${host}`;
+    
+    console.log(`Base URL for redirects: ${baseUrl}`);
 
     let fallbackBilling;
     if (currency === "SAR") {
@@ -218,8 +233,8 @@ app.post("/api/create-payment-session", async (req, res) => {
         email: customer && customer.email ? customer.email : "john.doe@example.com",
         name: customer && customer.name ? customer.name : "John Doe"
       },
-      success_url: `http://localhost:${port}/example-redirect?redirect_path=/success`,
-      failure_url: `http://localhost:${port}/example-redirect?redirect_path=/failure`,
+      success_url: `${baseUrl}/example-redirect?redirect_path=/success`,
+      failure_url: `${baseUrl}/example-redirect?redirect_path=/failure`,
       capture: true,
       locale: locale || "en-GB",
       processing_channel_id: processingChannelId,
