@@ -1,0 +1,157 @@
+/* Minimal custom CSS, can be extended if needed */
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  
+  /* Flow container styling */
+  #flow-container {
+    border-radius: 0.5rem;
+    background-color: #fff;
+    padding: 1.5rem;
+    min-height: 300px;
+  }
+  
+  /* Example error/success placeholders */
+  #error-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #fee2e2;
+    color: #dc2626;
+    border-radius: 4px;
+  }
+  #error-message.hidden {
+    display: none;
+  }
+  
+  #success-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #dcfce7;
+    color: #16a34a;
+    border-radius: 4px;
+  }
+  #success-message.hidden {
+    display: none;
+  }
+  
+  /* Notification style for 'Product added to your cart' */
+  .toast-notification {
+    position: fixed;
+    top: 80px; /* below the nav */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1rem 1.5rem;
+    border-radius: 9999px;
+    color: #ffffff;
+    font-weight: 500;
+    z-index: 9999; /* on top of everything */
+    transition: opacity 0.3s ease;
+  }
+  .toast-notification.hide {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  /* Additional base styles for better responsiveness */
+  html {
+    box-sizing: border-box;
+  }
+  
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  
+  /* Responsive styling */
+  @media (max-width: 768px) {
+    .toast-notification {
+      width: 90%;
+      text-align: center;
+    }
+    
+    #flow-container {
+      padding: 1rem;
+    }
+    
+    /* Improve responsive layout for small screens */
+    .max-w-7xl, .max-w-4xl {
+      width: 100%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    /* Improve button sizing on mobile */
+    button {
+      padding: 0.75rem 1rem !important;
+      font-size: 0.9rem !important;
+    }
+    
+    /* Better table display on mobile */
+    table {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+    }
+    
+    /* Fix flex layouts on mobile */
+    div[style*="display: flex"] {
+      flex-wrap: wrap;
+    }
+    
+    /* Ensure checkout container fits mobile screens */
+    #flow-container {
+      width: 100% !important;
+      max-width: 100% !important;
+      overflow: hidden;
+    }
+    
+    /* Better touch targets for mobile */
+    button, a, [role="button"], input[type="button"], input[type="submit"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+  
+  /* Small devices (phones) */
+  @media (max-width: 640px) {
+    body {
+      font-size: 14px;
+    }
+    
+    /* Adjust card padding for smaller screens */
+    [style*="padding: 1.5rem"] {
+      padding: 1rem !important;
+    }
+    
+    /* Better spacing on small screens */
+    .py-12 {
+      padding-top: 1.5rem !important;
+      padding-bottom: 1.5rem !important;
+    }
+    
+    .gap-8 {
+      gap: 1rem !important;
+    }
+    
+    /* Adjust headings for mobile */
+    h1.text-2xl {
+      font-size: 1.5rem !important;
+    }
+    
+    /* Improve form elements on mobile */
+    input, select, textarea {
+      font-size: 16px !important; /* Prevents iOS zoom on focus */
+    }
+    
+    /* Make product grid single column on very small screens */
+    .grid-cols-1.sm\\:grid-cols-2.lg\\:grid-cols-3 {
+      grid-template-columns: 1fr !important;
+    }
+    
+    /* Adjust images to fit container */
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+  

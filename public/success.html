@@ -1,0 +1,390 @@
+<!-- Success.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>Payment Success</title>
+  <script>
+    // Add this function to get theme colors
+    function getThemeConfig() {
+      const selectedTheme = localStorage.getItem('selectedTheme') || 'default';
+      const themes = {
+        default: {
+          background: '#f9fafb',
+          containerBg: '#ffffff',
+          text: '#1f2937',
+          success: '#059669',
+          border: '#e5e7eb',
+          buttonBg: '#059669',
+          buttonHover: '#047857',
+          codeBg: '#1f2937',
+          codeText: '#e5e7eb',
+          expandButtonBg: '#374151',
+          expandButtonText: '#ffffff',
+          expandButtonHover: '#4b5563',
+          titleText: '#1f2937',
+          responseTitle: '#1f2937'
+        },
+        midnight: {
+          background: '#0A0A0C',
+          containerBg: '#1F1F1F',
+          text: '#F9F9FB',
+          success: '#2ECC71',
+          border: '#68686C',
+          buttonBg: '#5E48FC',
+          buttonHover: '#4936E0',
+          codeBg: '#000000',
+          codeText: '#F9F9FB',
+          expandButtonBg: '#5E48FC',
+          expandButtonText: '#F9F9FB',
+          expandButtonHover: '#4936E0',
+          titleText: '#F9F9FB',
+          responseTitle: '#F9F9FB'
+        },
+        simplicity: {
+          background: '#ffffff',
+          containerBg: '#F5F5F5',
+          text: '#09182B',
+          success: '#3CB628',
+          border: '#CED0D1',
+          buttonBg: '#000000',
+          buttonHover: '#333333',
+          codeBg: '#09182B',
+          codeText: '#ffffff',
+          expandButtonBg: '#09182B',
+          expandButtonText: '#ffffff',
+          expandButtonHover: '#1a2942',
+          titleText: '#09182B',
+          responseTitle: '#09182B'
+        },
+        grapefruit: {
+          background: '#F7F7F5',
+          containerBg: '#FFFFFF',
+          text: '#000000',
+          success: '#06DDB2',
+          border: '#F2F2F2',
+          buttonBg: '#E05650',
+          buttonHover: '#D03F39',
+          codeBg: '#000000',
+          codeText: '#F2F2F2',
+          expandButtonBg: '#E05650',
+          expandButtonText: '#FFFFFF',
+          expandButtonHover: '#D03F39',
+          titleText: '#000000',
+          responseTitle: '#000000'
+        }
+      };
+      
+      return themes[selectedTheme];
+    }
+
+    // Add function to apply theme
+    function applyTheme() {
+      const theme = getThemeConfig();
+      document.body.style.background = theme.background;
+      document.body.style.color = theme.text;
+      
+      const container = document.querySelector('.container');
+      if (container) {
+        container.style.background = theme.containerBg;
+        container.style.boxShadow = `0 4px 6px ${theme.border}20`;
+      }
+
+      const successIcon = document.querySelector('.success-icon');
+      if (successIcon) {
+        successIcon.style.color = theme.success;
+      }
+
+      const h1 = document.querySelector('h1');
+      if (h1) {
+        h1.style.color = theme.success;
+      }
+
+      const pre = document.querySelector('pre');
+      if (pre) {
+        pre.style.background = theme.codeBg;
+        pre.style.color = theme.codeText;
+      }
+
+      const homeButton = document.querySelector('.home-button');
+      if (homeButton) {
+        homeButton.style.background = theme.buttonBg;
+        homeButton.style.color = '#FFFFFF';
+        homeButton.addEventListener('mouseenter', () => {
+          homeButton.style.background = theme.buttonHover;
+        });
+        homeButton.addEventListener('mouseleave', () => {
+          homeButton.style.background = theme.buttonBg;
+        });
+      }
+
+      const copyButton = document.querySelector('.copy-button');
+      if (copyButton) {
+        copyButton.style.background = theme.border;
+        copyButton.style.color = theme.text;
+      }
+
+      const responseSection = document.querySelector('.response-section');
+      if (responseSection) {
+        responseSection.style.background = theme.containerBg;
+        responseSection.style.borderColor = theme.border;
+      }
+
+      const responseTitle = document.querySelector('.response-title');
+      if (responseTitle) {
+        responseTitle.style.color = theme.responseTitle;
+      }
+
+      const expandButton = document.querySelector('.expand-button');
+      if (expandButton) {
+        expandButton.style.background = theme.expandButtonBg;
+        expandButton.style.color = theme.expandButtonText;
+        expandButton.addEventListener('mouseenter', () => {
+          expandButton.style.background = theme.expandButtonHover;
+        });
+        expandButton.addEventListener('mouseleave', () => {
+          expandButton.style.background = theme.expandButtonBg;
+        });
+      }
+
+      const tooltip = document.querySelector('.copied-tooltip');
+      if (tooltip) {
+        tooltip.style.background = theme.success;
+        tooltip.style.color = '#FFFFFF';
+      }
+    }
+
+    // Apply theme when DOM is loaded
+    document.addEventListener('DOMContentLoaded', applyTheme);
+  </script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      border-radius: 12px;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    h1 {
+      color: #059669;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .success-icon {
+      color: #059669;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .response-section {
+      margin-top: 2rem;
+      text-align: left;
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .response-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .response-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1f2937;
+    }
+    .response-container {
+      max-height: 200px;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    .response-container.expanded {
+      max-height: none;
+    }
+    .expand-button {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+      background: #374151;
+      color: #ffffff;
+      border: none;
+      border-radius: 0 0 8px 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .expand-button:hover {
+      background: #4b5563;
+    }
+    pre {
+      text-align: left;
+      background: #1f2937;
+      color: #e5e7eb;
+      padding: 1.5rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+    .copy-button {
+      background: #e5e7eb;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .copy-button:hover {
+      background: #d1d5db;
+    }
+    .home-button {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      background: #059669;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+    }
+    .home-button:hover {
+      background: #047857;
+    }
+    .copied-tooltip {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #059669;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .copied-tooltip.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="success-icon">✓</div>
+    <h1>Payment Successful</h1>
+    <p>Thank you! Your payment was completed successfully.</p>
+    
+    <div class="response-section">
+      <div class="response-header">
+        <span class="response-title">Payment Authorization Response</span>
+        <button class="copy-button" onclick="copyResponse()">Copy Response</button>
+      </div>
+      <div class="response-container" id="responseContainer">
+        <pre id="responsePre">Loading response data...</pre>
+      </div>
+      <button class="expand-button" onclick="toggleResponse()">Show More</button>
+    </div>
+
+    <a href="/" class="home-button">Return Home</a>
+  </div>
+
+  <div id="copiedTooltip" class="copied-tooltip">Copied to clipboard!</div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async function() {
+      try {
+        // Get the most recent payment session ID from the response
+        const response = await fetch("/api/latest-session");
+        if (!response.ok) {
+          throw new Error('Failed to get latest session');
+        }
+        const data = await response.json();
+        const sessionId = data.id;
+        
+        console.log("Latest session ID:", sessionId);
+        
+        if (sessionId) {
+          // Get session details
+          const sessionResponse = await fetch(`/api/payment-session/${sessionId}`);
+          if (!sessionResponse.ok) {
+            throw new Error('Session fetch failed');
+          }
+          const sessionDetails = await sessionResponse.json();
+          console.log("Session details:", sessionDetails);
+
+          // If we have a payment_id, get the payment details
+          if (sessionDetails.payment_id) {
+            const paymentResponse = await fetch(`/api/payment/${sessionDetails.payment_id}`);
+            if (!paymentResponse.ok) {
+              throw new Error('Payment fetch failed');
+            }
+            const paymentDetails = await paymentResponse.json();
+            console.log("Payment details:", paymentDetails);
+
+            // Display both session and payment details
+            responsePre.textContent = JSON.stringify({
+              session_details: sessionDetails,
+              payment_details: paymentDetails
+            }, null, 2);
+          } else {
+            // If no payment_id, just show session details
+            responsePre.textContent = JSON.stringify({
+              session_details: sessionDetails
+            }, null, 2);
+          }
+        } else {
+          console.warn("No session ID found");
+          responsePre.textContent = "No session ID found";
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        responsePre.textContent = "Error fetching payment details";
+      }
+    });
+
+    function copyResponse() {
+      try {
+        const responsePre = document.getElementById("responsePre");
+        const tooltip = document.getElementById("copiedTooltip");
+        
+        // Copy to clipboard
+        navigator.clipboard.writeText(responsePre.textContent)
+          .then(() => {
+            // Show tooltip
+            tooltip.classList.add("show");
+            setTimeout(() => {
+              tooltip.classList.remove("show");
+            }, 2000);
+          })
+          .catch(err => {
+            console.error("Failed to copy response:", err);
+          });
+      } catch (error) {
+        console.error("Error in copy function:", error);
+      }
+    }
+
+    function toggleResponse() {
+      const container = document.getElementById('responseContainer');
+      const button = document.querySelector('.expand-button');
+      
+      if (container.classList.contains('expanded')) {
+        container.classList.remove('expanded');
+        button.textContent = 'Show More';
+      } else {
+        container.classList.add('expanded');
+        button.textContent = 'Show Less';
+      }
+    }
+  </script>
+</body>
+</html>

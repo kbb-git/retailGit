@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>StoreFront</title>
+
+  <!-- Tailwind for convenience -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Checkout Web Components for Flow -->
+  <script src="https://checkout-web-components.checkout.com/index.js"></script>
+
+  <!-- React + ReactDOM + Babel for local dev -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  <!-- Lucide icons if needed -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Our custom CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="antialiased bg-gray-50">
+
+  <div id="root"></div>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+
+  <!-- Our React code -->
+  <script type="text/babel" src="js/app.js"></script>
+</body>
+</html>
