@@ -3,7 +3,8 @@
 <html>
 <head>
   <meta charset="UTF-8"/>
-  <title>Payment Success</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo Completed</title>
   <script>
     // Add this function to get theme colors
     function getThemeConfig() {
@@ -164,9 +165,14 @@
       margin: 0;
       padding: 20px;
       transition: background-color 0.3s, color 0.3s;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .container {
       max-width: 800px;
+      width: 100%;
       margin: 0 auto;
       padding: 2rem;
       border-radius: 12px;
@@ -179,8 +185,13 @@
     }
     .success-icon {
       color: #059669;
-      font-size: 3rem;
-      margin-bottom: 1rem;
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .message {
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      line-height: 1.5;
     }
     .response-section {
       margin-top: 2rem;
@@ -188,12 +199,15 @@
       background: #f8fafc;
       border-radius: 8px;
       padding: 1rem;
+      display: none; /* Hidden by default */
     }
     .response-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 10px;
     }
     .response-title {
       font-size: 1.1rem;
@@ -248,18 +262,35 @@
     .copy-button:hover {
       background: #d1d5db;
     }
-    .home-button {
-      display: inline-block;
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
       margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-block;
       padding: 0.75rem 1.5rem;
-      background: #059669;
       color: white;
       text-decoration: none;
       border-radius: 6px;
       transition: background-color 0.3s;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
     }
-    .home-button:hover {
+    .btn-primary {
+      background: #059669;
+    }
+    .btn-primary:hover {
       background: #047857;
+    }
+    .btn-secondary {
+      background: #4b5563;
+    }
+    .btn-secondary:hover {
+      background: #374151;
     }
     .copied-tooltip {
       position: fixed;
@@ -271,19 +302,50 @@
       border-radius: 6px;
       opacity: 0;
       transition: opacity 0.3s;
+      z-index: 100;
     }
     .copied-tooltip.show {
       opacity: 1;
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1.5rem;
+      }
+      h1 {
+        font-size: 1.75rem;
+      }
+      .response-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .button-group {
+        flex-direction: column;
+        width: 100%;
+      }
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="success-icon">✓</div>
-    <h1>Payment Successful</h1>
-    <p>Thank you! Your payment was completed successfully.</p>
+    <h1>Demo Completed Successfully</h1>
+    <div class="message">
+      <p>Thank you for trying out our payment demo!</p>
+      <p>Your transaction was processed successfully and the demo has now concluded.</p>
+    </div>
     
-    <div class="response-section">
+    <div class="button-group">
+      <a href="/" class="btn btn-primary">Return to Main Project</a>
+      <button class="btn btn-secondary" onclick="toggleApiResponse()">View API Response</button>
+    </div>
+
+    <div class="response-section" id="responseSection">
       <div class="response-header">
         <span class="response-title">Payment Authorization Response</span>
         <button class="copy-button" onclick="copyResponse()">Copy Response</button>
@@ -293,8 +355,6 @@
       </div>
       <button class="expand-button" onclick="toggleResponse()">Show More</button>
     </div>
-
-    <a href="/" class="home-button">Return Home</a>
   </div>
 
   <div id="copiedTooltip" class="copied-tooltip">Copied to clipboard!</div>
@@ -349,6 +409,9 @@
         console.error("Error:", error);
         responsePre.textContent = "Error fetching payment details";
       }
+      
+      // Apply theme after DOM is loaded
+      applyTheme();
     });
 
     function copyResponse() {
@@ -383,6 +446,19 @@
       } else {
         container.classList.add('expanded');
         button.textContent = 'Show Less';
+      }
+    }
+    
+    function toggleApiResponse() {
+      const responseSection = document.getElementById('responseSection');
+      const button = document.querySelector('.btn-secondary');
+      
+      if (responseSection.style.display === 'block') {
+        responseSection.style.display = 'none';
+        button.textContent = 'View API Response';
+      } else {
+        responseSection.style.display = 'block';
+        button.textContent = 'Hide API Response';
       }
     }
   </script>
